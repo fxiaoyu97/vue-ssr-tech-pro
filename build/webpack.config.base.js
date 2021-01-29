@@ -7,11 +7,11 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
   target: 'web', // 添加一个编译目标
-  entry: path.join(__dirname, '../src/index.js'), // __dirname表示这个文件所在目录的地址,path.join表示两个路径拼接起来,entry表示文件入口
+  entry: path.join(__dirname, '../client/index.js'), // __dirname表示这个文件所在目录的地址,path.join表示两个路径拼接起来,entry表示文件入口
   // 文件出口
   output: {
     filename: 'bundle.[hash:8].js', // 输出文件
-    path: path.join(__dirname, 'dist') // 输出路径
+    path: path.join(__dirname, '../dist') // 输出路径
   },
   module: {
     // 添加规则

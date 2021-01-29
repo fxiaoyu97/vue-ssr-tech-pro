@@ -57,6 +57,10 @@ if (isDev) {
             },
             'stylus-loader'
           ]
+        },
+        {
+          test: /\.css$/i, //i表示大小写不敏感
+          use: ['style-loader', 'css-loader']
         }
       ]
     },
@@ -69,13 +73,13 @@ if (isDev) {
 } else {
   config = merge(baseConfig, {
     entry: {
-      app: path.join(__dirname, '../src/index.js'),
+      app: path.join(__dirname, '../client/index.js'),
       vendor: ['vue']
     },
     output: {
       filename: '[name].[chunkhash:8].js',
       publicPath: './', // 解决 Automatic publicPath is not supported in this browser 错误
-      path: path.join(__dirname, 'dist')
+      path: path.join(__dirname, '../dist')
     },
     module: {
       rules: [
@@ -91,6 +95,15 @@ if (isDev) {
               }
             },
             { loader: 'stylus-loader' }
+          ]
+        },
+        {
+          test: /\.css$/i, //i表示大小写不敏感
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
+            'css-loader'
           ]
         }
       ]
