@@ -46,21 +46,55 @@ if (isDev) {
       rules: [
         {
           test: /\.styl/, // 使用css预处理器
-          use: [
-            'style-loader', // 各模块自下往上处理，下面的处理完，会变成上面模块要处理的文件
-            'css-loader', // 每个loader只处理它自己关心的那部分，不会管处理以后的文件
+          oneOf: [
+            // 这里匹配 `<style module>`
             {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true // stylus-loader可以生成sourceMap文件，此处配置让postcss-loader直接使用已生成的文件，不再自己生成
-              }
+              resourceQuery: /module/,
+              use: [
+                'vue-style-loader',
+                {
+                  loader: 'css-loader',
+                  options: {
+                    esModule: false,
+                    modules: {
+                      localIdentName: '[path]-[name]-[hash:base64:5]', // css对应的class名称
+                      exportLocalsConvention: 'camelCase' // style中的class类名用横杠连接方式转化为驼峰命名方式，Javascript变量使用驼峰命名时，style中的calss类名时一般使用 - 连接，调用时不好用
+                    }
+                  }
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true // stylus-loader可以生成sourceMap文件，此处配置让postcss-loader直接使用已生成的文件，不再自己生成
+                  }
+                },
+                'stylus-loader'
+              ]
             },
-            'stylus-loader'
+
+            {
+              use: [
+                'vue-style-loader', // 各模块自下往上处理，下面的处理完，会变成上面模块要处理的文件
+                {
+                  loader: 'css-loader', // 每个loader只处理它自己关心的那部分，不会管处理以后的文件
+                  options: {
+                    esModule: false // vue文件中的样式失效,css-loader4.0后默认对esModule设置的是true,vue-style-loader 4.1.2默认接收的是commonjs的结果，也就是默认接收的是“css-loader中esModule设置的是false的结果”，  所以一个配置的是true，一个接收的是false，最终就不会显示样式了。
+                  }
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true // stylus-loader可以生成sourceMap文件，此处配置让postcss-loader直接使用已生成的文件，不再自己生成
+                  }
+                },
+                'stylus-loader'
+              ]
+            }
           ]
         },
         {
           test: /\.css$/i, //i表示大小写不敏感
-          use: ['style-loader', 'css-loader']
+          use: ['vue-style-loader', 'css-loader']
         }
       ]
     },
@@ -87,7 +121,16 @@ if (isDev) {
           test: /\.styl/,
           use: [
             MiniCssExtractPlugin.loader,
-            { loader: 'css-loader' },
+            {
+              loader: 'css-loader',
+              options: {
+                esModule: false,
+                modules: {
+                  localIdentName: '[hash:base64:5]', // css对应的class名称，正式环境使用更加精简的命名
+                  exportLocalsConvention: 'camelCase' // style中的class类名用横杠连接方式转化为驼峰命名方式，Javascript变量使用驼峰命名时，style中的calss类名时一般使用 - 连接，调用时不好用
+                }
+              }
+            },
             {
               loader: 'postcss-loader',
               options: {
@@ -103,7 +146,10 @@ if (isDev) {
             {
               loader: MiniCssExtractPlugin.loader
             },
-            'css-loader'
+            {
+              loader: 'css-loader', // 每个loader只处理它自己关心的那部分，不会管处理以后的文件
+              options: { esModule: false }
+            }
           ]
         }
       ]

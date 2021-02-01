@@ -1,4 +1,5 @@
 const path = require('path') // 使用绝对路径，防止出现问题
+const createVueLoaderOptions = require('./vue-loader.config')
 
 // 代码要用在正式环境和开发环境下，此时需要添加判断，添加依赖 cross-env(可以适配不同的平台),
 // 启动命令上添加环境变量 cross-env NODE_ENV=production webpack --config webpack.config.js
@@ -18,7 +19,8 @@ const config = {
     rules: [
       {
         test: /\.vue$/, // 检测文件类型,正则表达式
-        loader: 'vue-loader' // 匹配到相关文件时，处理时使用的模块
+        loader: 'vue-loader', // 匹配到相关文件时，处理时使用的模块
+        options: createVueLoaderOptions(isDev)
       },
       {
         test: /\.jsx$/, // 处理jsx文件，需要在.babelrc配置中添加相关内容，安装相关模块(babel-load v8+)： @babel/core @babel/preset-env babel-loader
