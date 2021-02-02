@@ -1,15 +1,15 @@
 <template>
   <section class="real-app">
     <input type="text" class="add-input" autofocus="autofocus" placeholder="接下来要做什么" @keyup.enter="addTodo" />
-    <Item 
-      :todo="todo" 
-      v-for="todo in filteredTodos" 
-      :key="todo.id" 
+    <Item
+      :todo="todo"
+      v-for="todo in filteredTodos"
+      :key="todo.id"
       @del="deleteTodo"
     />
-    <tabs 
-      :filter="filter" 
-      :todos="todos" 
+    <tabs
+      :filter="filter"
+      :todos="todos"
       @toggle="toggleFilter"
       @clearAll="clearAllCompleted"
     />
@@ -20,7 +20,7 @@ import Item from './item.vue'
 import Tabs from './tabs.vue'
 let id = 0
 export default {
-  data() {
+  data () {
     return {
       // 大部分数据声明在最外层里面
       todos: [],
@@ -31,17 +31,17 @@ export default {
     Item,
     Tabs
   },
-  computed:{
-    filteredTodos(){
-      if(this.filter==='all'){
+  computed: {
+    filteredTodos () {
+      if (this.filter === 'all') {
         return this.todos
       }
-      const completed = this.filter==='completed'
-      return this.todos.filter(todo => completed===todo.completed)
+      const completed = this.filter === 'completed'
+      return this.todos.filter(todo => completed === todo.completed)
     }
   },
   methods: {
-    addTodo(e) {
+    addTodo (e) {
       // unshift 插入在数组的第一项
       this.todos.unshift({
         id: id++,
@@ -50,22 +50,21 @@ export default {
       })
       e.target.value = ''
     },
-    deleteTodo(id) {
+    deleteTodo (id) {
       this.todos.splice(
         this.todos.findIndex((todo) => todo.id === id),
         1
       )
     },
-    toggleFilter(state){
+    toggleFilter (state) {
       this.filter = state
     },
-    clearAllCompleted(){
+    clearAllCompleted () {
       this.todos = this.todos.filter(todo => !todo.completed)
     }
   }
 }
 </script>
-
 
 <style lang="stylus" scoped>
 .real-app

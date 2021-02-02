@@ -1,0 +1,7 @@
+{
+  "extends": "standard",
+  "parser": "vue-eslint-parser",
+  "plugins": [
+    "html"
+  ]
+}

@@ -1,4 +1,4 @@
-## 配置流程
+ ## 配置流程
 
 1. 在`vue-loader.config.js`文件中添加配置：`cssModules:{}`
 

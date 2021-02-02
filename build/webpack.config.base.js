@@ -18,6 +18,12 @@ const config = {
     // 添加规则
     rules: [
       {
+        test: /\.(vue|js|jsx)$/, // 所有要检测的文件的后缀名的集合
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        enforce: 'pre' // 预处理，对于这几种文件，在处理loader加载之前，都会通过 eslint-loader 处理一遍
+      },
+      {
         test: /\.vue$/, // 检测文件类型,正则表达式
         loader: 'vue-loader', // 匹配到相关文件时，处理时使用的模块
         options: createVueLoaderOptions(isDev)

@@ -7,5 +7,5 @@ const root = document.createElement('div')
 document.body.appendChild(root)
 
 new Vue({
-    render:(h) =>h(App) // 渲染内容
+  render: (h) => h(App) // 渲染内容
 }).$mount(root) // 挂载在root节点下
