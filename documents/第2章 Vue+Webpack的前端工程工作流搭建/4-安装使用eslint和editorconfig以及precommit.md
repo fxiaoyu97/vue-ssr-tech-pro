@@ -79,4 +79,4 @@ npm i eslint-plugin-html --save-dev
    }
    ```
 
-   
+## 配置editorconfig
