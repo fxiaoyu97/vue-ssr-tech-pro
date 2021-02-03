@@ -100,8 +100,8 @@ if (isDev) {
     },
     devServer,
     plugins: defaultPlugins.concat([
-      new webpack.HotModuleReplacementPlugin(), // 热替换模块
-      new webpack.NoEmitOnErrorsPlugin()
+      new webpack.HotModuleReplacementPlugin() // 热替换模块
+      // new webpack.NoEmitOnErrorsPlugin() 已经取消了，不再使用
     ])
   })
 } else {
@@ -163,11 +163,7 @@ if (isDev) {
     ]),
     optimization: {
       splitChunks: {
-        cacheGroups: {
-          commons: {
-            name: 'vendor'
-          }
-        }
+        chunks: 'all'
       },
       runtimeChunk: true
     }

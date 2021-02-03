@@ -80,3 +80,42 @@ npm i eslint-plugin-html --save-dev
    ```
 
 ## 配置editorconfig
+
+用来规范编辑器的配置，在不同的编辑器在同一项目有相同的配置
+
+VSCode需要安装相关插件`EditorConfig for VS Code`，Webstorm自带插件，无需安装。
+
++ `root = true`：读取 editorconfig 的配置，读到这个文件即可，不用再往上层目录搜索
++ `charset`：编码方式
++ `end_of_line`：指定换行符，Linux 换行符为 `lf`
++ `indent_size`：tab 键的空格长度
++ `indent_style = space`：tab 键的样式，推荐使用 space ，表示空格
++ `insert_final_newline = true`：文件末尾自动添加空行
++ `trim_trailing_whitespace = true`：去除行末的空格
+
+`.editorconfig`文件内容如下所示：
+
+```
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+```
+
+## git commit之前检测代码规范性——precommit
+
+在项目使用 git 提交代码时，使用 git 的钩子 precommit ，在使用 git commit 之前检测代码的规范性，代码不合格无法提交。
+
+1. 安装依赖：`npm i husky --save-dev`
+2. 在 package.json 中添加命令
+
+```
+"precommit":"npm run lint-fix",
+```
+
+3. 项目必须是git初始化过的项目，非 git 项目无法使用此模块

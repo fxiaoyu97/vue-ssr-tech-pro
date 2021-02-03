@@ -7,6 +7,7 @@ const createVueLoaderOptions = require('./vue-loader.config')
 const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
+  mode: process.env.NODE_ENV || 'production', // development||productions
   target: 'web', // 添加一个编译目标
   entry: path.join(__dirname, '../client/index.js'), // __dirname表示这个文件所在目录的地址,path.join表示两个路径拼接起来,entry表示文件入口
   // 文件出口
