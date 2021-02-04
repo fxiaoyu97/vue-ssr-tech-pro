@@ -26,3 +26,4 @@ const config = {
 }
 ```
 
+5. 去除webpack配置文件中 plugins 下的 `new webpack.NoEmitOnErrorsPlugin()`，已废弃
